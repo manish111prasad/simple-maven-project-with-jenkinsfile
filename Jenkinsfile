@@ -3,12 +3,12 @@ pipeline {
 
   tools {
     jdk 'jdk-21'      // match Jenkins installed JDK name
-    maven 'Maven3'    // configure Maven tool in Jenkins with this name
+    maven 'Maven'    // configure Maven tool in Jenkins with this name
   }
 
   options {
     timestamps()
-    ansiColor('xterm')  // uncomment after installing AnsiColor plugin
+    // ansiColor('xterm')  // uncomment after installing AnsiColor plugin
   }
 
   stages {
