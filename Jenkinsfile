@@ -1,24 +1,24 @@
-pipeline {
+pipeline {                        // OPEN pipeline
   agent any
 
   tools {
-    jdk 'jdk-21'      // match Jenkins installed JDK name
-    maven 'Maven'    // configure Maven tool in Jenkins with this name
+    jdk 'jdk-21'
+    maven 'Maven'
   }
 
   options {
     timestamps()
-    // ansiColor('xterm')  // uncomment after installing AnsiColor plugin
+    // ansiColor('xterm')
   }
 
-  stages {
-    stage('Checkout') {
+  stages {                        // OPEN stages
+    stage('Checkout') {           // OPEN stage Checkout
       steps {
         checkout scm
       }
-    }
+    }                             // CLOSE stage Checkout
 
-    stage('Build & Test') {
+    stage('Build & Test') {       // OPEN stage Build & Test
       steps {
         bat 'mvn -B -q clean install'
       }
@@ -27,30 +27,28 @@ pipeline {
           junit 'target/surefire-reports/*.xml'
         }
       }
-    }
+    }                             // CLOSE stage Build & Test
 
-    stage('Archive Artifact') {
+    stage('Archive Artifact') {   // OPEN stage Archive Artifact
       when {
         expression { fileExists('target') }
       }
       steps {
         archiveArtifacts artifacts: 'target/*.jar', fingerprint: true, onlyIfSuccessful: true
       }
-    }
-  }
+    }                             // CLOSE stage Archive Artifact
 
-  stage('Run App') {
+    stage('Run App') {            // OPEN stage Run App
       when {
         expression { fileExists('target/simple-maven-project-1.0-SNAPSHOT.jar') }
       }
       steps {
-        // Run your Hello World class directly from JAR
         bat 'java -cp target/simple-maven-project-1.0-SNAPSHOT.jar com.example.App'
       }
-    }
-  
+    }                             // CLOSE stage Run App
+  }                               // CLOSE stages
 
-  post {
+  post {                          // OPEN post
     failure {
       echo 'Build failed. Check console output and test reports.'
     }
@@ -60,6 +58,5 @@ pipeline {
     always {
       cleanWs()
     }
-  }
-}
-
+  }                               // CLOSE post
+}                                 // CLOSE pipeline
