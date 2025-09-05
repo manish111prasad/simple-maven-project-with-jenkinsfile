@@ -22,12 +22,17 @@ pipeline {                        // OPEN pipeline
       steps {
         bat 'mvn -B -q clean install'
       }
-      post {
-        always {
-          junit 'target/surefire-reports/*.xml'
-        }
-      }
     }                             // CLOSE stage Build & Test
+
+    stage('Test Reports') {       // OPEN stage Test Reports
+      when {
+        expression { fileExists('target/surefire-reports') }
+      }
+      steps {
+        echo 'Publishing JUnit test results...'
+        junit 'target/surefire-reports/*.xml'
+      }
+    }                             // CLOSE stage Test Reports
 
     stage('Archive Artifact') {   // OPEN stage Archive Artifact
       when {
