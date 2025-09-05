@@ -20,7 +20,7 @@ pipeline {
 
     stage('Build & Test') {
       steps {
-        sh 'mvn -B -q clean install'
+        bat 'mvn -B -q clean install'
       }
       post {
         always {
