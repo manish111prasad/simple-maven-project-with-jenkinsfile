@@ -2,14 +2,13 @@ pipeline {
   agent any
 
   tools {
-    // Match these names with Jenkins -> Manage Jenkins -> Tools installations
-    jdk 'JDK17'
-    maven 'Maven3'
+    jdk 'jdk-21'      // match Jenkins installed JDK name
+    maven 'Maven3'    // configure Maven tool in Jenkins with this name
   }
 
   options {
     timestamps()
-    ansiColor('xterm')
+    ansiColor('xterm')  // uncomment after installing AnsiColor plugin
   }
 
   stages {
@@ -21,7 +20,7 @@ pipeline {
 
     stage('Build & Test') {
       steps {
-        sh label: 'Maven build', script: 'mvn -B -q clean install'
+        sh 'mvn -B -q clean install'
       }
       post {
         always {
