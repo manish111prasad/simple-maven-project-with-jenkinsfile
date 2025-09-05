@@ -39,6 +39,17 @@ pipeline {
     }
   }
 
+  stage('Run App') {
+      when {
+        expression { fileExists('target/simple-maven-project-1.0-SNAPSHOT.jar') }
+      }
+      steps {
+        // Run your Hello World class directly from JAR
+        bat 'java -cp target/simple-maven-project-1.0-SNAPSHOT.jar com.example.App'
+      }
+    }
+  }
+
   post {
     failure {
       echo 'Build failed. Check console output and test reports.'
