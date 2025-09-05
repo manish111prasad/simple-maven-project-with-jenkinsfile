@@ -48,7 +48,7 @@ pipeline {
         bat 'java -cp target/simple-maven-project-1.0-SNAPSHOT.jar com.example.App'
       }
     }
-  }
+  
 
   post {
     failure {
@@ -62,3 +62,4 @@ pipeline {
     }
   }
 }
+
